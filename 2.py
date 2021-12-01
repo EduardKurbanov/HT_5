@@ -23,25 +23,7 @@ class PasswordException(Exception):
 class SymbolException(Exception):
     pass
 
-
-# def val_log_pass(login, password):
-#     """
-#     :param login: -> must be not less than 3 characters and not more than 50.
-#     :param password: -> the password must be at least 8 characters and must have at least one digit and a '@$#%&?!'.
-#     :return True or Exception.
-#     """
-#
-#     if len(str(login)) > 3 and len(str(login)) < 50:
-#         if len(str(password.isalpha())) > 8 and (re.search('[0-9]', str(password))):
-#             if re.search('[@$#%&?!]', password):
-#                 print(f"login -> {login} - ok")
-#                 print(f"password -> {password} - ok")
-#             else:
-#                 raise SymbolException(f"SymbolException there must be at least one character '@$#%&?!' -> {password}")
-#         else:
-#             raise PasswordException(f"PasswordException password must be more than 8 and consist of letters and at least one digit '0-9' -> {password}")
-#     else:
-#         raise LoginException(f"LoginException must be not less than 3 characters and not more than 50 -> {login}")
+   
 def val_log_pass(login, password):
     """
     :param login: -> must be not less than 3 characters and not more than 50.
