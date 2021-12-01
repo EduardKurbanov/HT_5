@@ -12,6 +12,36 @@
 import re
 
 
+class LoginException(Exception):
+    pass
+
+
+class PasswordException(Exception):
+    pass
+
+
+class SymbolException(Exception):
+    pass
+
+
+# def val_log_pass(login, password):
+#     """
+#     :param login: -> must be not less than 3 characters and not more than 50.
+#     :param password: -> the password must be at least 8 characters and must have at least one digit and a '@$#%&?!'.
+#     :return True or Exception.
+#     """
+#
+#     if len(str(login)) > 3 and len(str(login)) < 50:
+#         if len(str(password.isalpha())) > 8 and (re.search('[0-9]', str(password))):
+#             if re.search('[@$#%&?!]', password):
+#                 print(f"login -> {login} - ok")
+#                 print(f"password -> {password} - ok")
+#             else:
+#                 raise SymbolException(f"SymbolException there must be at least one character '@$#%&?!' -> {password}")
+#         else:
+#             raise PasswordException(f"PasswordException password must be more than 8 and consist of letters and at least one digit '0-9' -> {password}")
+#     else:
+#         raise LoginException(f"LoginException must be not less than 3 characters and not more than 50 -> {login}")
 def val_log_pass(login, password):
     """
     :param login: -> must be not less than 3 characters and not more than 50.
@@ -19,20 +49,38 @@ def val_log_pass(login, password):
     :return True or Exception.
     """
 
-    if len(str(login)) >= 3 and len(str(login)) <= 50:
-        if len(str(password)) >= 8 and (re.search('[0-9]', str(password))):
-            if re.search('[@$#%&?!]', password):
-                print("login and pass -> OK")
-            else:
-                raise Exception("SymbolException")
-        else:
-            raise Exception("PasswordException")
-    else:
-        raise Exception("LoginException")
+    print("Name: {0}".format(login))
+    print("Password: {0}".format(password))
 
+    try:
+        if len(str(login)) > 3 and len(str(login)) < 50:
+            if len(str(password)) < 8:
+                raise PasswordException(f"password must be more than 8 characters-> {password}")
+
+            elif re.search(r'[0-9]', str(password)) and re.search(r'[@$#%&?!]', password) and (
+                    re.search(r'[a-z]', password) or re.search(r'[A-Z]]', password)):
+                print("Status: OK")
+
+            elif re.search(r'[@$#%&?!]', password) == None:
+                raise SymbolException(f"there must be at least one character '@$#%&?!' -> {password}")
+
+            elif re.search(r'[0-9]', str(password)) == None:
+                raise PasswordException(f"password must be more than 8 and at least one digit '0-9' -> {password}")
+
+            else:
+                raise PasswordException(f"password must be more than 8 and at least one or more letters 'a-z' 'A-Z'-> {password}")
+
+        else:
+            raise LoginException(f"Login must be not less than 3 characters and not more than 50 -> {login}")
+
+    except LoginException as err:
+        print("Status: {0}".format(err))
+    except PasswordException as err:
+        print("Status: {0}".format(err))
+    except SymbolException as err:
+        print("Status: {0}".format(err))
 
 while True:
-    try:
         print("*" * 76)
         print("<<name / password pair validation. >>")
         print("<<login must be less than 3 characters no more than 50. >>")
@@ -50,5 +98,5 @@ while True:
             break
         else:
             continue
-    except Exception as err:
-        print("<<error>> {0}".format(err))
+
+

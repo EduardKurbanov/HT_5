@@ -7,9 +7,17 @@
 """
 
 
-def new_rangr(start=0, stop=0, step=1):
+def new_range(start=0, stop=0, step=1):
+    if start > 0 and stop == 0:
+        stop = start
+        start = 0
+    elif step == 0:
+        raise ValueError("range() arg 3 must not be zero")
+    elif start > 0 and stop > 0 and start > stop:
+        return
+
     i = start
-    if start < stop:
+    if start < stop and step != 0:
         while i < stop:
             yield i
             i += step
@@ -17,8 +25,7 @@ def new_rangr(start=0, stop=0, step=1):
         while i > stop:
             yield i
             i += step
-    else:
-        raise Exception
 
-for i in new_rangr(0 ,10, 2):
+
+for i in new_range(10):
     print(i)

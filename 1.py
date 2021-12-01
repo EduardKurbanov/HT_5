@@ -12,21 +12,26 @@
 """
 
 
+class LoginException(Exception):
+    pass
+
+
 def verification_password_login(username, password, silent=False):
-    log_pass_list = {
-        "Anton": "123qwe1",
-        "Bob": "456rty2",
-        "Tom": "789uio3",
-        "Ed": "987poi4",
-        "Sam": "654asd5"
-    }
-    for k, v in log_pass_list.items():
-        if k == username and v == password:
-            return True
-        elif k != username and v != password and silent == True:
-            return False
-        elif silent == False:
-            raise Exception("LoginException")
+    log_pass_list = [
+        ["Anton", "123qwe1"],
+        ["Bob", "456rty2"],
+        ["Tom", "789uio3"],
+        ["Ed", "987poi4"],
+        ["Sam", "654asd5"]
+    ]
+    dict_lis = dict(log_pass_list)
+
+    if (username, password) in dict_lis.items():
+        return True
+    elif ((username, password) not in dict_lis.items()) and (silent == True):
+        return False
+    elif silent == False:
+        raise LoginException(f"invalid login: -> {username}")
 
 
 while True:
@@ -35,10 +40,10 @@ while True:
         password = input("enter pass: ")
         silent = input("enter true or false: ")
 
-        if login and password:
+        if login and password and silent:
+            print(verification_password_login(str(login), str(password), bool(silent)))
+        elif login and password:
             print(verification_password_login(login, password))
-        elif login and password and silent:
-            print(verification_password_login(login, password, bool(silent)))
 
         print("*" * 60)
         yes = input('if you want to leave the program press "Y" if not then "N": ')
@@ -47,5 +52,5 @@ while True:
             break
         else:
             continue
-    except Exception as err:
-        print("<<error>> {0}".format(err))
+    except LoginException as err:
+        print(err)
