@@ -13,7 +13,7 @@ def new_range(start=None, stop=None, step=None):
             if type(start).__name__ == 'NoneType':
                 raise TypeError("range expected at least 1 argument, got 0")
             else:
-                raise TypeError("'{0}' object cannot be interpreted as an integer".format(type(start).__name__ ))
+                raise TypeError("'{0}' object cannot be interpreted as an integer".format(type(start).__name__))
         elif type(stop).__name__ != 'int' and type(stop).__name__ != 'NoneType':
             raise TypeError("'{0}' object cannot be interpreted as an integer".format(type(stop).__name__))
         elif type(step).__name__ != 'int' and type(step).__name__ != 'NoneType':
@@ -36,11 +36,17 @@ def new_range(start=None, stop=None, step=None):
         new_step = 1
     elif new_start < 0 and stop is None and step is None:
         return
-    elif new_start <= 0 and new_stop > new_start and step is None:
+    elif (new_start <= 0 or new_start >= 0) and new_stop > new_start and step is None:
         new_step = 1
-    elif new_start > 0 and new_start > new_stop and (new_stop <= 0 or new_stop >= 0):
+    elif new_start < 0 and new_start < new_stop and (new_stop <= 0 or new_stop >= 0) and new_step <= 0:
         return
-    elif new_step == 0 or new_step < 0:
+    elif new_start > 0 and new_start < new_stop and new_step <= 0:
+        return
+    elif new_start < 0 and new_stop < 0 and new_step >= 0:
+        return
+    elif new_start > 0 and new_stop < 0 and new_step >= 0:
+        return
+    elif new_step == 0:  # or new_step < 0:
         if new_step == 0:
             raise ValueError("range() arg 3 must not be zero")
         else:
@@ -58,4 +64,49 @@ def new_range(start=None, stop=None, step=None):
 
 
 for i in new_range(10):
-    print(i)
+    print(i, end=" ")
+print("*" * 30 + "new_range(10)")
+
+for i in new_range(1, 11):
+    print(i, end=" ")
+print("*" * 30 + "new_range(1, 11)")
+
+for i in new_range(0, -10, -1):
+    print(i, end=" ")
+print("*" * 30 + "new_range(0, -10, -1)")
+
+for i in new_range(10, 2, -2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(10, 2, -2)")
+
+for i in new_range(10, -2, -2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(10, -2, -2)")
+
+for i in new_range(-10, 2, 2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(-10, 2, 2)")
+
+for i in new_range(-10, -2, -2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(-10, -2, -2)")
+
+for i in new_range(-10, -20, -2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(-10, -20, -2)")
+
+for i in new_range(10, -20, -2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(10, -20, -2)")
+
+for i in new_range(-10, 20, 2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(-10, 20, 2)")
+
+for i in new_range(-10, -20, 2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(-10, -20, 2)")
+#
+for i in new_range(10, -20, 2):
+    print(i, end=" ")
+print("*" * 30 + "new_range(10, -20, 2)")
